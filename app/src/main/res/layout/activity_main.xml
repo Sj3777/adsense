@@ -6,8 +6,6 @@
     tools:context=".MainActivity"
     android:background="@drawable/back">
 
-
-
     <Button
         android:id="@+id/start_signup"
         android:layout_width="320dp"
