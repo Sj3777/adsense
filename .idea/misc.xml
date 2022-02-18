@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/asus/AndroidStudioProjects/adsense/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/Users/asus/AndroidStudioProjects/adsense/app/src/main/res/layout/activity_sign_in.xml" value="0.1" />
+        <entry key="..\:/Users/asus/AndroidStudioProjects/adsense/app/src/main/res/layout/activity_sign_up.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/back.xml" value="0.184" />
         <entry key="app/src/main/res/drawable/button.xml" value="0.184" />
         <entry key="app/src/main/res/drawable/button2.xml" value="0.184" />
