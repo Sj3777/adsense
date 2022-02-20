@@ -1,5 +1,4 @@
 package com.example.makemymoney;
-
 import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,7 +9,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.makemymoney.models.ApiResponse;
 import com.example.makemymoney.models.User;
 
 import retrofit2.Call;
@@ -35,18 +36,25 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 User loginUser = new User(email.getText().toString(), password.getText().toString());
-                Call<User> userPost = apiInterface.loginUser(loginUser);
-                userPost.enqueue(new Callback<User>() {
+                Call<ApiResponse> apiResponseCall = apiInterface.loginUser(loginUser);
+                apiResponseCall.enqueue(new Callback<ApiResponse>() {
                     @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
-                        Intent intent = new Intent(SignInActivity.this, DashboardActivity.class);
-                        startActivity(intent);
-                        finish();
-                        Log.e(TAG, "onResponse"+response.body());
+                    public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                        if (response.isSuccessful()) {
+                            ApiResponse apiResponse = response.body();
+                            apiResponse.setData(response.body().getData());
+                            Intent intent = new Intent(SignInActivity.this, DashboardActivity.class);
+                            startActivity(intent);
+                            Toast.makeText(SignInActivity.this, "onResponse: " + apiResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, "onResponse: Success  " + response);
+                            Log.e(TAG, "onResponse: Success-2 " + apiResponse.getData().getName()+" "+apiResponse.getData().getEmail());
+                        } else {
+                            Toast.makeText(SignInActivity.this, "onResponse: Fail" + response.errorBody(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                     @Override
-                    public void onFailure(Call<User> call, Throwable t) {
-                        Log.e(TAG, "onFailure"+t.getLocalizedMessage());
+                    public void onFailure(Call<ApiResponse> call, Throwable t) {
+                        Log.e(TAG, "onFailure: "+t.getLocalizedMessage());
                     }
                 });
             }
